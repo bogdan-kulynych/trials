@@ -29,12 +29,11 @@ test.update({
     'C': (20, 15)  # 20 successes, 15 failures, total 35
 })
 
-print(test.summary)
+print(test.evaluate('lift'))
 ```
 
 Output:
 ```
-(lift)
 B: lift = 0.86%, p = 51.73%
 C: lift = -30.39%, p = 99.53%
 ```

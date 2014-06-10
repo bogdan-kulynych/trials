@@ -13,7 +13,10 @@ if __name__ == '__main__':
         'C': (20, 15)
     })
 
+    print('LIFT')
     lift = test.evaluate('lift')
     print(lift)
+
+    print('DOMINATION')
     domination = test.evaluate('beta-domination')
     print(domination)

@@ -4,19 +4,29 @@ import numpy as np
 from scipy import special as sp
 
 
-class Lift:
-
+class Metric(object):
     def __init__(self, variants, control=None):
         if control is None:
             control = list(variants.keys())[0]
 
+        self.control = variants[control]
+        self.others = OrderedDict((label, variant) for label, variant \
+            in variants.items() if label != control)
+
+
+class Lift(Metric):
+    """
+    Calculates lifts E[(B-A)/A] and domination probabilities P(A > B) of all \
+    variants relative to the control using Monte Carlo integration:
+    """
+
+    def __init__(self, variants, control=None):
+        super(Lift, self).__init__(variants, control)
+
         self.result = OrderedDict()
-        control_sample = variants[control].sample()
+        control_sample = self.control.sample()
 
-        noncontrols = [(label, variant) for label, variant in variants.items() \
-            if label != control]
-
-        for label, variant in noncontrols:
+        for label, variant in self.others.items():
             xs = variant.sample()
             deltas = xs - control_sample
             lift = np.mean(deltas / control_sample, axis=0)
@@ -35,24 +45,18 @@ class Lift:
         return '\n'.join(lines)
 
 
-class BetaDomination:
+class BetaDomination(Metric):
     """
     Closed formula for P(A > B) within Beta-Bernoulli model
     http://www.evanmiller.org/bayesian-ab-testing.html
     """
 
     def __init__(self, variants, control=None):
-        if control is None:
-            control = list(variants.keys())[0]
+        super(Lift, self).__init__(variants, control)
 
         self.result = OrderedDict()
-
-        noncontrols = [(label, variant) for label, variant in variants.items() \
-            if label != control]
-
-        a = variants[control]
-
-        for label, b in noncontrols:
+        a = self.control
+        for label, b in self.others.items():
             total = 0
             for i in range(b.alpha - 1):
                 total += np.exp(sp.betaln(a.alpha + i, b.beta + a.beta) \

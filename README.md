@@ -2,6 +2,8 @@ trials
 ======
 Bayesian A/B testing thing
 
+[![Build Status](https://travis-ci.org/bogdan-kulynych/trials.svg?branch=master)](https://travis-ci.org/bogdan-kulynych/trials)
+
 ### Install:
 
 ```

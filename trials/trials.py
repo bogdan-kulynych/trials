@@ -9,11 +9,16 @@ class Trials(object):
     Main interface for creating A/B tests.
     """
 
-    class UnknownVariantType(Exception):
+    class UnsupportedVariantType(Exception):
+        pass
+
+    class UnsupportedMetric(Exception):
         pass
 
     def __init__(self, variant_labels, vtype='bernoulli', *args, **kwargs):
         if isinstance(vtype, str):
+            if vtype not in default_vtypes:
+                raise UnsupportedVariantType()
             vtype = default_vtypes[vtype]
 
         self.vtype = vtype
@@ -27,6 +32,8 @@ class Trials(object):
     def evaluate(self, metric='lift', *args, **kwargs):
         result = None
         if isinstance(metric, str):
+            if metric not in self.vtype.metrics:
+                raise Trials.UnsupportedMetric()
             cls = default_metrics[metric]
             result = cls(self.variants, *args, **kwargs)
         else:

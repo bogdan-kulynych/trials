@@ -9,8 +9,8 @@ if __name__ == '__main__':
 
     test.update({
         'A': (50, 10),
-        'B': (45, 10),
-        'C': (20, 20)
+        'B': (75, 15),
+        'C': (20, 15)
     })
 
     print(test.summary)

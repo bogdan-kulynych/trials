@@ -1,11 +1,10 @@
-import numpy as np
-
 
 def cached(*attributes):
     """
-    The decorator caches method value as long as self's attribute remains unchanged
+    The decorator caches method value as long as given self's attributes
+    remain unchanged
 
-    :param attribute a numpy array attribute name
+    :param attributes a list of attribute names to cache on
     """
     def _cached(method):
         cache = {}

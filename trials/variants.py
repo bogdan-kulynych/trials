@@ -2,7 +2,7 @@ import numpy as np
 
 from collections import OrderedDict
 
-from .evaluation import Lift
+from .metrics import metrics
 from .utils import cached
 
 
@@ -20,11 +20,11 @@ def PosteriorSampleMixin(*params):
 
 class BernoulliVariant(PosteriorSampleMixin('alpha', 'beta')):
     """
-    Binary event variant
+    Bernoulli binary event variant
     """
 
     posterior = np.random.beta
-    evaluator_classes = [Lift]
+    metrics = ['lift', 'beta-domination']
 
     def __init__(self, alpha=1, beta=1):
         self.alpha = alpha
@@ -49,3 +49,8 @@ class ExpVariant(object):
 
 class LogNormalVariant(object):
     pass
+
+
+vtypes = {
+    'bernoulli': BernoulliVariant
+}

@@ -1,7 +1,7 @@
 from nose import tools
 
 from trials.trials import *
-from trials.evaluation import *
+from trials.metrics import *
 
 
 class TestLift:

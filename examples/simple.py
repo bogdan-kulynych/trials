@@ -13,4 +13,5 @@ if __name__ == '__main__':
         'C': (20, 15)
     })
 
-    print(test.summary)
+    result = test.evaluate('lift')
+    print(result)

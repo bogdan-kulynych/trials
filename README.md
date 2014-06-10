@@ -1,6 +1,6 @@
 trials
 ======
-## Bayesian A/B testing thing
+Bayesian A/B testing thing
 
 ### Install:
 

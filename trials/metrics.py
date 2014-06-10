@@ -27,11 +27,6 @@ class Lift:
                 'p': p
             }
 
-    @property
-    def best(self):
-        return max(self.result, \
-            key=lambda variant: self.result[variant]['lift'] * self.result[variant]['p'])
-
     def __str__(self):
         lines = []
         for variant, values in self.result.items():

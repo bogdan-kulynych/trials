@@ -18,7 +18,7 @@ class Trials(object):
     def __init__(self, variant_labels, vtype='bernoulli', *args, **kwargs):
         if isinstance(vtype, str):
             if vtype not in default_vtypes:
-                raise UnsupportedVariantType()
+                raise Trials.UnsupportedVariantType()
             vtype = default_vtypes[vtype]
 
         self.vtype = vtype

@@ -19,14 +19,14 @@ nosetests
 ### Usage
 
 ```python
-# Starts an A/B test with Bernoulli (Binary) observations
+# Start an A/B test with Bernoulli (binary) observations
 test = Trials(['A', 'B', 'C'])
 
-# Add info on successes and failures
+# Observe successes and failures
 test.update({
-    'A': (50, 10),
-    'B': (75, 15),
-    'C': (20, 15)
+    'A': (50, 10), # 50 successes, 10 failures, total 60
+    'B': (75, 15), # 75 successes, 15 failures, total 90
+    'C': (20, 15)  # 20 successes, 15 failures, total 35
 })
 
 print(test.summary)

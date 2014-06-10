@@ -9,7 +9,7 @@ from .utils import cached
 def PosteriorSampleMixin(*params):
     class PosteriorSampleMixinCls(object):
 
-        sample_size = 1500
+        sample_size = 5000
 
         @cached(*params)
         def sample(self, n=sample_size):

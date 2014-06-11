@@ -1,3 +1,1 @@
-__all__ = ['Trials']
-
-from .trials import *
+from trials import Trials

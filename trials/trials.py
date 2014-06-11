@@ -8,7 +8,6 @@ class Trials(object):
     """
     Main interface for creating A/B tests.
     """
-
     class UnsupportedVariationType(Exception):
         pass
 

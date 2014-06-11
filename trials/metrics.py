@@ -66,6 +66,9 @@ def domination(variations, control=None):
 
 
 def empirical_lift(variations, control=None):
+    """
+    Calculates empirical lift (A-B)/A
+    """
     values = OrderedDict()
     a, others = split(variations, control)
     for label, b in others.items():

@@ -10,6 +10,12 @@ Bayesian A/B testing thing
 pip install -r requirements.txt
 ```
 
+Also pip might not install all system packages for scipy. To install them on Debian system:
+
+```
+sudo apt-get install libatlas-dev libatlas-base-dev liblapack-dev gfortran
+```
+
 Run tests:
 
 ```

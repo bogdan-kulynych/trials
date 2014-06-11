@@ -1,80 +1,88 @@
 from collections import OrderedDict
 
 import numpy as np
-from scipy import special as sp
+
+from scipy import stats
+from scipy import special as spc
 
 
-class Metric(object):
-    def __init__(self, variants, control=None):
-        if control is None:
-            control = list(variants.keys())[0]
+class MetricResult(object):
 
-        self.control = variants[control]
-        self.others = OrderedDict((label, variant) for label, variant \
-            in variants.items() if label != control)
-
-
-class Lift(Metric):
-    """
-    Calculates lifts E[(B-A)/A] and domination probabilities P(A > B) of all \
-    variants relative to the control using Monte Carlo integration:
-    """
-
-    def __init__(self, variants, control=None):
-        super(Lift, self).__init__(variants, control)
-
-        self.result = OrderedDict()
-        control_sample = self.control.sample()
-
-        for label, variant in self.others.items():
-            xs = variant.sample()
-            deltas = xs - control_sample
-            lift = np.mean(deltas / control_sample, axis=0)
-            p = np.mean(deltas * lift > 0, axis=0)
-
-            self.result[label] = {
-                'lift': lift,
-                'p': p
-            }
+    def __init__(self, title, values):
+        self.title = title
+        self.values = values
 
     def __str__(self):
         lines = []
-        for variant, values in self.result.items():
-            lines.append('{}: lift = {:.2%}, p = {:.2%}' \
-                .format(variant, values['lift'], values['p']))
+        for variation, value in self.values.items():
+            lines.append('{}: {} = {:.2%}' \
+                .format(variation, self.title, value))
         return '\n'.join(lines)
 
 
-class BetaDomination(Metric):
+def split(variations, control=None):
+    if control is None:
+        control = list(variations.keys())[0]
+
+    others = OrderedDict((label, variation) for label, variation \
+        in variations.items() if label != control)
+    control = variations[control]
+
+    return control, others
+
+
+def lift(variations, control=None):
     """
-    Closed formula for P(A > B) within Beta-Bernoulli model
+    Calculates expected lift E[(B-A)/A]
+    """
+    values = OrderedDict()
+    control, others = split(variations, control)
+    for label, variation in others.items():
+        a = stats.beta(control.alpha, control.beta)
+        b = stats.beta(variation.alpha, variation.beta)
+        m = a.mean()
+        lift = (b.mean() - m) / m
+        values[label] = lift
+
+    return MetricResult('lift', values)
+
+
+def domination(variations, control=None):
+    """
+    Calculates P(A > B) using a closed formula
     http://www.evanmiller.org/bayesian-ab-testing.html
     """
+    values = OrderedDict()
+    a, others = split(variations, control)
+    for label, b in others.items():
+        total = 0
+        for i in range(b.alpha - 1):
+            total += np.exp(spc.betaln(a.alpha + i, b.beta + a.beta) \
+                - np.log(b.beta + i) - spc.betaln(1 + i, b.beta) - \
+                                        spc.betaln(a.alpha, a.beta))
+        values[label] = total
 
-    def __init__(self, variants, control=None):
-        super(Lift, self).__init__(variants, control)
+    return MetricResult('p', values)
 
-        self.result = OrderedDict()
-        a = self.control
-        for label, b in self.others.items():
-            total = 0
-            for i in range(b.alpha - 1):
-                total += np.exp(sp.betaln(a.alpha + i, b.beta + a.beta) \
-                    - np.log(b.beta + i) - sp.betaln(1 + i, b.beta) - sp.betaln(a.alpha, a.beta))
 
-            self.result[label] = {
-                'p': total
-            }
-
-    def __str__(self):
-        lines = []
-        for variant, values in self.result.items():
-            lines.append('{}: p = {:.2%}' \
-                .format(variant, values['p']))
-        return '\n'.join(lines)
+def ztest(variations, control=None):
+    """
+    Calculates z-test p-value for normal distribution
+    """
+    values = OrderedDict()
+    a, others = split(variations, control)
+    for label, b in others.items():
+        p_a = float(a.alpha-1) / (a.alpha-1 + a.beta-1)
+        p_b = float(b.alpha-1) / (b.alpha-1 + b.beta-1)
+        sse_a = p_a * (1-p_a) / (a.alpha-1 + a.beta-1)
+        sse_b = p_b * (1-p_b) / (b.alpha-1 + b.beta-1)
+        z = (p_b - p_a) / np.sqrt(sse_a + sse_b)
+        values[label] = stats.norm().cdf(z)
+    return MetricResult('p', values)
 
 
 metrics = {
-    'lift': Lift,
-    'beta-domination': BetaDomination
+    'lift': lift,
+    'domination': domination,
+    'z-test': ztest
 }

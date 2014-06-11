@@ -9,7 +9,7 @@ class TestTrials:
         self.trials = Trials(['A', 'B', 'C', 'D', 'E'])
 
     def test_raises_unknown_dtype(self):
-        tools.assert_raises(Trials.UnsupportedVariantType, Trials, ['A', 'B'], \
+        tools.assert_raises(Trials.UnsupportedVariationType, Trials, ['A', 'B'], \
             'whatever')
 
     def test_raises_unknown_metric(self):
@@ -17,7 +17,7 @@ class TestTrials:
             self.trials.evaluate, 'whatever')
 
     def test_variants(self):
-        tools.assert_true(len(self.trials.variants) == 5)
+        tools.assert_true(len(self.trials.variations) == 5)
 
     def test_update(self):
         self.trials.update({'A': (1000, 500), 'B': (1000, 500)})

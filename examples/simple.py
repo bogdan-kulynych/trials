@@ -18,5 +18,9 @@ if __name__ == '__main__':
     print(lift)
 
     print('DOMINATION')
-    domination = test.evaluate('beta-domination')
+    domination = test.evaluate('domination')
     print(domination)
+
+    print('FREQUENTIST DOMINATION')
+    f_domination = test.evaluate('z-test')
+    print(f_domination)

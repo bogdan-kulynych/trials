@@ -1,4 +1,4 @@
-import numpy as np
+from scipy import stats
 
 from collections import OrderedDict
 
@@ -7,24 +7,25 @@ from .utils import cached
 
 
 def PosteriorSampleMixin(*params):
+
     class PosteriorSampleMixinCls(object):
 
         sample_size = 5000
 
         @cached(*params)
         def sample(self, n=sample_size):
-            return self.posterior(*[getattr(self, p) for p in params], size=n)
+            return self.posterior.rvs(*[getattr(self, p) for p in params], size=n)
 
     return PosteriorSampleMixinCls
 
 
-class BernoulliVariant(PosteriorSampleMixin('alpha', 'beta')):
+class BernoulliVariation(PosteriorSampleMixin('alpha', 'beta')):
     """
-    Bernoulli binary event variant
+    Bernoulli binary event variation
     """
 
-    posterior = np.random.beta
-    metrics = ['lift', 'beta-domination']
+    posterior = stats.beta
+    metrics = ['lift', 'domination', 'z-test']
 
     def __init__(self, alpha=1, beta=1):
         self.alpha = alpha
@@ -35,22 +36,22 @@ class BernoulliVariant(PosteriorSampleMixin('alpha', 'beta')):
         self.beta += failures
 
 
-class NormalVariant(object):
+class NormalVariation(object):
     pass
 
 
-class PoissonVariant(object):
+class PoissonVariation(object):
     pass
 
 
-class ExpVariant(object):
+class ExpVariation(object):
     pass
 
 
-class LogNormalVariant(object):
+class LogNormalVariation(object):
     pass
 
 
 vtypes = {
-    'bernoulli': BernoulliVariant
+    'bernoulli': BernoulliVariation
 }

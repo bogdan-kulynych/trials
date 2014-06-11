@@ -1,13 +1,13 @@
 from nose import tools
 import numpy as np
 
-from trials.variants import *
+from trials.variations import *
 
 
 class TestBernoulli:
 
     def setup(self):
-        self.x = BernoulliVariant(1, 1)
+        self.x = BernoulliVariation(1, 1)
 
     def test_update(self):
         self.x.update(100, 20)

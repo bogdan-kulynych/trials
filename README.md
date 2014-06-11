@@ -10,7 +10,7 @@ Bayesian A/B testing thing
 pip install -r requirements.txt
 ```
 
-Also pip might not install all the system packages needed for scipy. To install them on Debian system:
+Also pip might not install all the system packages needed for scipy. To install them on Debian:
 
 ```
 sudo apt-get install libatlas-dev libatlas-base-dev liblapack-dev gfortran
@@ -48,3 +48,6 @@ C: p = 0.22%
 ```
 
 This means that variant **B** is better than **A** by about 0.8% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 30% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
+
+### Theory
+See how Bayesian metrics (blue) compare to Frequentist ones (green) in the [notebook](http://nbviewer.ipython.org/github/bogdan-kulynych/trials/blob/master/examples/benchmark.ipynb).

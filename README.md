@@ -62,6 +62,6 @@ Variation C:
 This means that variant **B** is better than **A** by about 0.4% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 31% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
 
 ### Theory
-Mathematical walkthrough is coming soon as a blog post.
+Explanation of mathematics behind and usage guide are coming soon as a blog post.
 
 Meanwhile, see how Bayesian metrics (blue) theoretically compare to Frequentist ones (green) in the [notebook](http://nbviewer.ipython.org/github/bogdan-kulynych/trials/blob/master/examples/benchmark.ipynb).

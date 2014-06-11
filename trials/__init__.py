@@ -1,1 +1,1 @@
-from trials import *
+from .trials import *

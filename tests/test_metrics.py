@@ -12,16 +12,16 @@ class TestLift:
         self.metric = self.trials.evaluate('lift', control='A')
 
     def test_evaluate(self):
-        tools.assert_true(len(self.metric.values) == 2)
+        tools.assert_true(len(self.metric) == 2)
 
     def test_str(self):
         str(self.metric)
 
     def test_sanity(self):
-        tools.assert_true(self.metric.values['C'] < 0 and \
-            self.metric.values['B'] < 0)
-        tools.assert_true(self.metric.values['C'] > \
-            self.metric.values['B'])
+        tools.assert_true(self.metric['C'] < 0 and \
+            self.metric['B'] < 0)
+        tools.assert_true(self.metric['C'] > \
+            self.metric['B'])
 
 
 class TestDomination:
@@ -32,14 +32,14 @@ class TestDomination:
         self.metric = self.trials.evaluate('domination', control='A')
 
     def test_evaluate(self):
-        tools.assert_true(len(self.metric.values) == 2)
+        tools.assert_true(len(self.metric) == 2)
 
     def test_str(self):
         str(self.metric)
 
     def test_sanity(self):
-        tools.assert_true(self.metric.values['C'] > \
-            self.metric.values['B'])
+        tools.assert_true(self.metric['C'] > \
+            self.metric['B'])
 
 
 class TestFrequentistDomination:
@@ -50,14 +50,14 @@ class TestFrequentistDomination:
         self.metric = self.trials.evaluate('frequentist domination', control='A')
 
     def test_evaluate(self):
-        tools.assert_true(len(self.metric.values) == 2)
+        tools.assert_true(len(self.metric) == 2)
 
     def test_str(self):
         str(self.metric)
 
     def test_sanity(self):
-        tools.assert_true(self.metric.values['C'] > \
-            self.metric.values['B'])
+        tools.assert_true(self.metric['C'] > \
+            self.metric['B'])
 
 
 class TestEmpiricalLift:
@@ -68,13 +68,13 @@ class TestEmpiricalLift:
         self.metric = self.trials.evaluate('empirical lift', control='A')
 
     def test_evaluate(self):
-        tools.assert_true(len(self.metric.values) == 2)
+        tools.assert_true(len(self.metric) == 2)
 
     def test_str(self):
         str(self.metric)
 
     def test_sanity(self):
-        tools.assert_true(self.metric.values['C'] < 0 and \
-            self.metric.values['B'] < 0)
-        tools.assert_true(self.metric.values['C'] > \
-            self.metric.values['B'])
+        tools.assert_true(self.metric['C'] < 0 and \
+            self.metric['B'] < 0)
+        tools.assert_true(self.metric['C'] > \
+            self.metric['B'])

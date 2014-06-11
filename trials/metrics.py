@@ -6,20 +6,6 @@ from scipy import stats
 from scipy import special as spc
 
 
-class MetricResult(object):
-
-    def __init__(self, title, values):
-        self.title = title
-        self.values = values
-
-    def __str__(self):
-        lines = []
-        for variation, value in self.values.items():
-            lines.append('{}: {} = {:.2%}' \
-                .format(variation, self.title, value))
-        return '\n'.join(lines)
-
-
 def split(variations, control=None):
     if control is None:
         control = list(variations.keys())[0]
@@ -44,7 +30,7 @@ def lift(variations, control=None):
         lift = (b.mean() - m) / m
         values[label] = lift
 
-    return MetricResult('lift', values)
+    return values
 
 
 def domination(variations, control=None):
@@ -62,7 +48,7 @@ def domination(variations, control=None):
                                         spc.betaln(a.alpha, a.beta))
         values[label] = total
 
-    return MetricResult('p', values)
+    return values
 
 
 def empirical_lift(variations, control=None):
@@ -77,7 +63,7 @@ def empirical_lift(variations, control=None):
         lift = (p_b - p_a) / p_a
         values[label] = lift
 
-    return MetricResult('lift', values)
+    return values
 
 
 def frequentist_domination(variations, control=None):
@@ -93,7 +79,7 @@ def frequentist_domination(variations, control=None):
         sse_b = p_b * (1-p_b) / (b.alpha-1 + b.beta-1)
         z = (p_b - p_a) / np.sqrt(sse_a + sse_b)
         values[label] = stats.norm().cdf(z)
-    return MetricResult('p', values)
+    return values
 
 
 metrics = {

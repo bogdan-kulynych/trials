@@ -13,18 +13,10 @@ if __name__ == '__main__':
         'C': (20, 15)
     })
 
-    print('LIFT')
-    lift = test.evaluate('lift')
-    print(lift)
+    lift = test.evaluate('lift', control='A')
+    domination = test.evaluate('domination', control='A')
 
-    print('DOMINATION')
-    domination = test.evaluate('domination')
-    print(domination)
-
-    print('EMPIRICAL LIFT')
-    e_lift = test.evaluate('empirical lift')
-    print(e_lift)
-
-    print('FREQUENTIST DOMINATION')
-    f_domination = test.evaluate('frequentist domination')
-    print(f_domination)
+    for variation in ['B', 'C']:
+        print('Variation {}:'.format(variation))
+        print('* lift = {:.2%}'.format(lift[variation]))
+        print('* P({} > {}) = {:.2%}'.format(variation, 'A', domination[variation]))

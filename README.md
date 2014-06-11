@@ -35,19 +35,28 @@ test.update({
     'C': (20, 15)  # 20 successes, 15 failures, total 35
 })
 
-print(test.evaluate('lift'))
-print(test.evaluate('domination'))
+# Evaluate results
+lift = test.evaluate('lift', control='A')
+domination = test.evaluate('domination', control='A')
+
+# Print metrics
+for variation in ['B', 'C']:
+    print('Variation {}:'.format(variation))
+    print('* lift = {:.2%}'.format(lift[variation]))
+    print('* P({} > {}) = {:.2%}'.format(variation, 'A', domination[variation]))
 ```
 
 Output:
 ```
-B: lift = 0.86%
-C: lift = -30.39%
-B: p = 50.32%
-C: p = 0.22%
+Variation B:
+* lift = 0.43%
+* P(B > A) = 50.32%
+Variation C:
+* lift = -31.00%
+* P(C > A) = 0.22%
 ```
 
-This means that variant **B** is better than **A** by about 0.8% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 30% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
+This means that variant **B** is better than **A** by about 0.4% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 31% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
 
 ### Theory
 See how Bayesian metrics (blue) compare to Frequentist ones (green) in the [notebook](http://nbviewer.ipython.org/github/bogdan-kulynych/trials/blob/master/examples/benchmark.ipynb).

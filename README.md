@@ -30,12 +30,15 @@ test.update({
 })
 
 print(test.evaluate('lift'))
+print(test.evaluate('domination'))
 ```
 
 Output:
 ```
-B: lift = 0.86%, p = 51.73%
-C: lift = -30.39%, p = 99.53%
+B: lift = 0.86%
+C: lift = -30.39%
+B: p = 50.32%
+C: p = 0.22%
 ```
 
-This means that variant **B** is better than **A** by about 0.8% (*lift*) with 51% (*p*) chance, and variant **C** is worse than **A** by 30% with 99.5% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
+This means that variant **B** is better than **A** by about 0.8% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 30% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.

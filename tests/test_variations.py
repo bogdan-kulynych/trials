@@ -11,6 +11,9 @@ class TestBernoulli:
 
     def test_update(self):
         self.x.update(100, 20)
+        self.x.update(200, 10)
+        tools.assert_true(self.x.alpha == 301)
+        tools.assert_true(self.x.beta == 31)
 
     def test_sample(self):
         s1 = self.x.sample(10)

@@ -37,10 +37,10 @@ def lift(variations, control=None):
     """
     values = OrderedDict()
     control, others = split(variations, control)
+    a = control.posterior(*[getattr(control, p) for p in control.params])
+    m = a.mean()
     for label, variation in others.items():
-        a = stats.beta(control.alpha, control.beta)
-        b = stats.beta(variation.alpha, variation.beta)
-        m = a.mean()
+        b = variation.posterior(*[getattr(variation, p) for p in variation.params])
         lift = (b.mean() - m) / m
         values[label] = lift
 

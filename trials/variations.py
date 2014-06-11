@@ -6,25 +6,22 @@ from .metrics import metrics
 from .utils import cached
 
 
-def PosteriorSampleMixin(*params):
+class PosteriorSampleMixin(object):
 
-    class PosteriorSampleMixinCls(object):
+    sample_size = 5000
 
-        sample_size = 5000
-
-        @cached(*params)
-        def sample(self, n=sample_size):
-            return self.posterior.rvs(*[getattr(self, p) for p in params], size=n)
-
-    return PosteriorSampleMixinCls
+    @cached
+    def sample(self, n=sample_size):
+        return self.posterior.rvs(*[getattr(self, p) for p in self.params], size=n)
 
 
-class BernoulliVariation(PosteriorSampleMixin('alpha', 'beta')):
+class BernoulliVariation(PosteriorSampleMixin):
     """
     Bernoulli binary event variation
     """
 
     posterior = stats.beta
+    params = ['alpha', 'beta']
     metrics = ['lift', 'domination', 'z-test']
 
     def __init__(self, alpha=1, beta=1):

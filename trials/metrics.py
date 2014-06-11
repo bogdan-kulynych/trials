@@ -65,9 +65,21 @@ def domination(variations, control=None):
     return MetricResult('p', values)
 
 
-def ztest(variations, control=None):
+def empirical_lift(variations, control=None):
+    values = OrderedDict()
+    a, others = split(variations, control)
+    for label, b in others.items():
+        p_a = float(a.alpha-1) / (a.alpha-1 + a.beta-1)
+        p_b = float(b.alpha-1) / (b.alpha-1 + b.beta-1)
+        lift = (p_b - p_a) / p_a
+        values[label] = lift
+
+    return MetricResult('lift', values)
+
+
+def frequentist_domination(variations, control=None):
     """
-    Calculates z-test p-value for normal distribution
+    Calculates z-test for domination
     """
     values = OrderedDict()
     a, others = split(variations, control)
@@ -83,6 +95,7 @@ def ztest(variations, control=None):
 
 metrics = {
     'lift': lift,
+    'empirical lift': empirical_lift,
     'domination': domination,
-    'z-test': ztest
+    'frequentist domination': frequentist_domination,
 }

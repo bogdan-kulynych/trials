@@ -21,6 +21,10 @@ if __name__ == '__main__':
     domination = test.evaluate('domination')
     print(domination)
 
+    print('EMPIRICAL LIFT')
+    e_lift = test.evaluate('empirical lift')
+    print(e_lift)
+
     print('FREQUENTIST DOMINATION')
-    f_domination = test.evaluate('z-test')
+    f_domination = test.evaluate('frequentist domination')
     print(f_domination)

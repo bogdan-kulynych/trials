@@ -18,7 +18,7 @@ class Trials(object):
     def __init__(self, variant_labels, vtype='bernoulli', *args, **kwargs):
         if isinstance(vtype, str):
             if vtype not in default_vtypes:
-                raise Trials.UnsupportedVariationType()
+                raise Trials.UnsupportedVariationType(vtype)
             vtype = default_vtypes[vtype]
 
         self.vtype = vtype
@@ -33,7 +33,7 @@ class Trials(object):
         result = None
         if isinstance(metric, str):
             if metric not in self.vtype.metrics:
-                raise Trials.UnsupportedMetric()
+                raise Trials.UnsupportedMetric(metric)
             cls = default_metrics[metric]
             result = cls(self.variations, *args, **kwargs)
         else:

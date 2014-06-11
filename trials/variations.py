@@ -22,7 +22,7 @@ class BernoulliVariation(PosteriorSampleMixin):
 
     posterior = stats.beta
     params = ['alpha', 'beta']
-    metrics = ['lift', 'domination', 'z-test']
+    metrics = ['lift', 'empirical lift', 'domination', 'frequentist domination']
 
     def __init__(self, alpha=1, beta=1):
         self.alpha = alpha

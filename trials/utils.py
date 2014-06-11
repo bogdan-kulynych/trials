@@ -3,8 +3,6 @@ def cached(method):
     """
     The decorator caches method value as long as given self's attributes
     remain unchanged
-
-    :param attributes a list of attribute names to cache on
     """
     cache = {}
     def wrapper(*args):

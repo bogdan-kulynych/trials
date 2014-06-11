@@ -42,12 +42,12 @@ class TestDomination:
             self.metric.values['B'])
 
 
-class TestZtest:
+class TestFrequentistDomination:
 
     def setup(self):
         self.trials = Trials(['A', 'B', 'C'])
         self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
-        self.metric = self.trials.evaluate('z-test', control='A')
+        self.metric = self.trials.evaluate('frequentist domination', control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric.values) == 2)

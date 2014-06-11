@@ -41,9 +41,10 @@ domination = test.evaluate('domination', control='A')
 
 # Print metrics
 for variation in ['B', 'C']:
-    print('Variation {}:'.format(variation))
-    print('* lift = {:.2%}'.format(lift[variation]))
-    print('* P({} > {}) = {:.2%}'.format(variation, 'A', domination[variation]))
+    print('Variation {name}:'.format(name=variation))
+    print('* lift = {value:.2%}'.format(value=lift[variation]))
+    print('* P({name} > {control}) = {value:.2%}' \
+        .format(name=variation, control='A', value=domination[variation]))
 ```
 
 Output:

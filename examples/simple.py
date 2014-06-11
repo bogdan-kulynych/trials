@@ -17,6 +17,7 @@ if __name__ == '__main__':
     domination = test.evaluate('domination', control='A')
 
     for variation in ['B', 'C']:
-        print('Variation {}:'.format(variation))
-        print('* lift = {:.2%}'.format(lift[variation]))
-        print('* P({} > {}) = {:.2%}'.format(variation, 'A', domination[variation]))
+        print('Variation {name}:'.format(name=variation))
+        print('* lift = {value:.2%}'.format(value=lift[variation]))
+        print('* P({name} > {control}) = {value:.2%}' \
+            .format(name=variation, control='A', value=domination[variation]))

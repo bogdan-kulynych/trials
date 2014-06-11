@@ -25,6 +25,8 @@ nosetests
 ### Usage
 
 ```python
+from trials import Trials
+
 # Start an A/B test with Bernoulli (binary) observations
 test = Trials(['A', 'B', 'C'])
 

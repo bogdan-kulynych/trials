@@ -6,16 +6,17 @@ from .metrics import metrics
 from .utils import cached
 
 
-class PosteriorSampleMixin(object):
+class Variation(object):
 
-    sample_size = 5000
+    @property
+    def rv(self):
+        """
+        Returns posterior as a frozen Random Variable
+        """
+        return self.posterior(*[getattr(self, param) for param in self.params])
 
-    @cached
-    def sample(self, n=sample_size):
-        return self.posterior.rvs(*[getattr(self, p) for p in self.params], size=n)
 
-
-class BernoulliVariation(PosteriorSampleMixin):
+class BernoulliVariation(Variation):
     """
     Bernoulli binary event variation
     """

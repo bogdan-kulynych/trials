@@ -5,9 +5,8 @@ from .metrics import metrics as default_metrics
 
 
 class Trials(object):
-    """
-    Main interface for creating A/B tests.
-    """
+    """Main A/B test class"""
+
     class UnsupportedVariationType(Exception):
         pass
 

@@ -3,23 +3,19 @@ from scipy import stats
 from collections import OrderedDict
 
 from .metrics import metrics
-from .utils import cached
 
 
 class Variation(object):
 
     @property
     def rv(self):
-        """
-        Returns posterior as a frozen Random Variable
-        """
+        """Returns posterior as a frozen random variable"""
+
         return self.posterior(*[getattr(self, param) for param in self.params])
 
 
 class BernoulliVariation(Variation):
-    """
-    Bernoulli binary event variation
-    """
+    """Variation that assumes binary bernoulli events"""
 
     posterior = stats.beta
     params = ['alpha', 'beta']

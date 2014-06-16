@@ -6,7 +6,7 @@ from scipy import stats
 from scipy import special as spc
 
 
-def split(variations, control=None):
+def _split(variations, control=None):
     if control is None:
         control = list(variations.keys())[0]
 
@@ -18,11 +18,10 @@ def split(variations, control=None):
 
 
 def lift(variations, control=None):
-    """
-    Calculates expected lift E[(B-A)/A]
-    """
+    """Calculates expected lift E[(B-A)/A]"""
+
     values = OrderedDict()
-    control, others = split(variations, control)
+    control, others = _split(variations, control)
     a = control.posterior(*[getattr(control, p) for p in control.params])
     m = a.mean()
     for label, variation in others.items():
@@ -34,12 +33,13 @@ def lift(variations, control=None):
 
 
 def domination(variations, control=None):
-    """
-    Calculates P(A > B) using a closed formula
+    """Calculates P(A > B) using a closed formula
+
     http://www.evanmiller.org/bayesian-ab-testing.html
     """
+
     values = OrderedDict()
-    a, others = split(variations, control)
+    a, others = _split(variations, control)
     for label, b in others.items():
         total = 0
         for i in range(b.alpha - 1):
@@ -52,11 +52,10 @@ def domination(variations, control=None):
 
 
 def empirical_lift(variations, control=None):
-    """
-    Calculates empirical lift E[(B-A)/A]
-    """
+    """Calculates empirical lift E[(B-A)/A]"""
+
     values = OrderedDict()
-    a, others = split(variations, control)
+    a, others = _split(variations, control)
     for label, b in others.items():
         p_a = float(a.alpha-1) / (a.alpha-1 + a.beta-1)
         p_b = float(b.alpha-1) / (b.alpha-1 + b.beta-1)
@@ -67,11 +66,10 @@ def empirical_lift(variations, control=None):
 
 
 def frequentist_domination(variations, control=None):
-    """
-    Calculates z-test for domination
-    """
+    """Calculates z-test for domination"""
+
     values = OrderedDict()
-    a, others = split(variations, control)
+    a, others = _split(variations, control)
     for label, b in others.items():
         p_a = float(a.alpha-1) / (a.alpha-1 + a.beta-1)
         p_b = float(b.alpha-1) / (b.alpha-1 + b.beta-1)
@@ -79,6 +77,7 @@ def frequentist_domination(variations, control=None):
         sse_b = p_b * (1-p_b) / (b.alpha-1 + b.beta-1)
         z = (p_b - p_a) / np.sqrt(sse_a + sse_b)
         values[label] = stats.norm().cdf(z)
+
     return values
 
 

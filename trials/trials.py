@@ -33,8 +33,8 @@ class Trials(object):
         if isinstance(metric, str):
             if metric not in self.vtype.metrics:
                 raise Trials.UnsupportedMetric(metric)
-            cls = default_metrics[metric]
-            result = cls(self.variations, *args, **kwargs)
+            func = default_metrics[metric]
+            result = func(self.variations, *args, **kwargs)
         else:
             result = metric(self.variations, *args, **kwargs)
         return result

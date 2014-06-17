@@ -24,12 +24,12 @@ class TestLift:
             self.metric['B'])
 
 
-class TestDomination:
+class TestDominance:
 
     def setup(self):
         self.trials = Trials(['A', 'B', 'C'])
         self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
-        self.metric = self.trials.evaluate('domination', control='A')
+        self.metric = self.trials.evaluate('dominance', control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)
@@ -42,12 +42,12 @@ class TestDomination:
             self.metric['B'])
 
 
-class TestFrequentistDomination:
+class TestFrequentistDominance:
 
     def setup(self):
         self.trials = Trials(['A', 'B', 'C'])
         self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
-        self.metric = self.trials.evaluate('frequentist domination', control='A')
+        self.metric = self.trials.evaluate('frequentist dominance', control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)

@@ -39,14 +39,14 @@ test.update({
 
 # Evaluate results
 lift = test.evaluate('lift', control='A')
-domination = test.evaluate('domination', control='A')
+dominance = test.evaluate('dominance', control='A')
 
 # Print metrics
 for variation in ['B', 'C']:
     print('Variation {name}:'.format(name=variation))
     print('* lift = {value:.2%}'.format(value=lift[variation]))
     print('* P({name} > {control}) = {value:.2%}' \
-        .format(name=variation, control='A', value=domination[variation]))
+        .format(name=variation, control='A', value=dominance[variation]))
 ```
 
 Output:

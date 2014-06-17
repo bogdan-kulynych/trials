@@ -32,7 +32,7 @@ def lift(variations, control=None):
     return values
 
 
-def domination(variations, control=None):
+def dominance(variations, control=None):
     """Calculates P(A > B) using a closed formula
 
     http://www.evanmiller.org/bayesian-ab-testing.html
@@ -65,8 +65,8 @@ def empirical_lift(variations, control=None):
     return values
 
 
-def frequentist_domination(variations, control=None):
-    """Calculates z-test for domination"""
+def frequentist_dominance(variations, control=None):
+    """Calculates z-test for dominance"""
 
     values = OrderedDict()
     a, others = _split(variations, control)
@@ -84,6 +84,6 @@ def frequentist_domination(variations, control=None):
 metrics = {
     'lift': lift,
     'empirical lift': empirical_lift,
-    'domination': domination,
-    'frequentist domination': frequentist_domination,
+    'dominance': dominance,
+    'frequentist dominance': frequentist_dominance,
 }

@@ -64,4 +64,4 @@ This means that variant **B** is better than **A** by about 0.4% (*lift*) with 5
 ### Theory
 Explanation of mathematics behind and usage guide are coming soon as a blog post.
 
-Meanwhile, see how Bayesian metrics (blue) theoretically compare to Frequentist ones (green) in the [notebook](http://nbviewer.ipython.org/github/bogdan-kulynych/trials/blob/master/examples/benchmark.ipynb).
+Meanwhile, see the [notebook](http://nbviewer.ipython.org/github/bogdan-kulynych/trials/blob/master/examples/benchmark.ipynb) for comparison of Bayesian lift (blue) and empirical lift (green) errors in a theoretical benchmark with equal sample sizes. Bayesian approach is a little better at predicting the lift, but no miracles here. Bayesian p-values and frequentist (z-test) p-values yield almost identical results.

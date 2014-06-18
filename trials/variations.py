@@ -19,7 +19,7 @@ class BernoulliVariation(Variation):
 
     posterior = stats.beta
     params = ['alpha', 'beta']
-    metrics = ['lift', 'empirical lift', 'dominance', 'frequentist dominance']
+    metrics = ['lift', 'empirical lift', 'dominance', 'z-test dominance']
 
     def __init__(self, alpha=1, beta=1):
         self.alpha = alpha

@@ -85,5 +85,5 @@ metrics = {
     'lift': lift,
     'empirical lift': empirical_lift,
     'dominance': dominance,
-    'frequentist dominance': frequentist_dominance,
+    'z-test dominance': frequentist_dominance,
 }

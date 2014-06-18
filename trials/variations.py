@@ -5,8 +5,8 @@ from collections import OrderedDict
 from .metrics import metrics
 
 
-class BernoulliVariation:
-    """Variation that assumes binary bernoulli events"""
+class BernoulliVariation(object):
+    """Variation that assumes binary Bernoulli events"""
 
     metrics = ['expected lift', 'lift CI', 'empirical lift', \
         'dominance', 'z-test dominance']

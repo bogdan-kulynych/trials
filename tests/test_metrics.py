@@ -6,6 +6,7 @@ from trials.metrics import *
 
 eps = 10e-3
 
+
 class TestLift:
 
     def setup(self):
@@ -15,9 +16,6 @@ class TestLift:
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)
-
-    def test_str(self):
-        str(self.metric)
 
     def test_sanity(self):
         tools.assert_true(self.metric['C'] < 0 and \
@@ -30,6 +28,25 @@ class TestLift:
         b_samples = self.trials.variations['B'].posterior.rvs(size=10000)
         mcmc_lift = np.mean((b_samples - a_samples) / a_samples)
         tools.assert_true(np.abs(mcmc_lift - self.metric['B']) < eps)
+
+
+class TestLiftCI:
+
+    def setup(self):
+        self.trials = Trials(['A', 'B', 'C'])
+        self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
+        self.metric = self.trials.evaluate('lift CI', control='A')
+        self.lift = self.trials.evaluate('lift', control='A')
+
+    def test_evaluate(self):
+        tools.assert_true(len(self.metric) == 2)
+        tools.assert_true(len(self.metric['B']) == 3)
+
+    def test_sanity(self):
+        tools.assert_true(self.metric['B'][0] < self.lift['B'] \
+            < self.metric['B'][2])
+        tools.assert_true(self.metric['C'][0] < self.lift['C'] \
+            < self.metric['C'][2])
 
 
 class TestDominance:
@@ -73,9 +90,6 @@ class TestZTestDominance:
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)
 
-    def test_str(self):
-        str(self.metric)
-
     def test_sanity(self):
         tools.assert_true(self.metric['C'] > \
             self.metric['B'])
@@ -90,9 +104,6 @@ class TestEmpiricalLift:
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)
-
-    def test_str(self):
-        str(self.metric)
 
     def test_sanity(self):
         tools.assert_true(self.metric['C'] < 0 and \

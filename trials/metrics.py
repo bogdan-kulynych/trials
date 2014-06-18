@@ -6,6 +6,9 @@ from scipy import stats
 from scipy import special as spc
 
 
+SAMPLE_SIZE = 10000
+
+
 def _split(variations, control=None):
     if control is None:
         control = list(variations.keys())[0]
@@ -22,12 +25,31 @@ def lift(variations, control=None):
 
     values = OrderedDict()
     control, others = _split(variations, control)
-    a = control.rv
+    a = control.posterior
     m = a.mean()
     for label, variation in others.items():
-        b = variation.rv
+        b = variation.posterior
         lift = (b.mean()-m) / m
         values[label] = lift
+
+    return values
+
+
+def lift_credible_interval(variations, control=None, ci=95, \
+                           sample_size=SAMPLE_SIZE):
+    """Calculates symmetric credible interval for lift E[(B-A)/A] using MCMC"""
+    values = OrderedDict()
+    a, others = _split(variations, control)
+
+    for label, b in others.items():
+        a_samples = a.posterior.rvs(size=sample_size)
+        b_samples = b.posterior.rvs(size=sample_size)
+        lift_samples = (b_samples-a_samples)/a_samples
+        left_percentile = 0.5*(100 - ci)
+        right = np.percentile(lift_samples, ci + left_percentile)
+        median = np.percentile(lift_samples, 50)
+        left = np.percentile(lift_samples, left_percentile)
+        values[label] = min(left, right), median, max(left, right)
 
     return values
 
@@ -67,8 +89,8 @@ def dominance(variations, control=None, sample_size=10000):
 
         # Use MCMC otherwise
         else:
-            a_samples = a.rv.rvs(sample_size)
-            b_samples = b.rv.rvs(sample_size)
+            a_samples = a.posterior.rvs(sample_size)
+            b_samples = b.posterior.rvs(sample_size)
             values[label] = np.mean(b_samples > a_samples)
 
     return values
@@ -110,6 +132,7 @@ def ztest_dominance(variations, control=None):
 
 metrics = {
     'lift': lift,
+    'lift CI': lift_credible_interval,
     'empirical lift': empirical_lift,
     'dominance': dominance,
     'z-test dominance': ztest_dominance,

@@ -13,11 +13,14 @@ if __name__ == '__main__':
         'C': (20, 15)
     })
 
-    lift = test.evaluate('lift', control='A')
     dominance = test.evaluate('dominance', control='A')
+    lift = test.evaluate('lift', control='A')
+    interval = test.evaluate('lift CI', control='A', ci=95)
 
     for variation in ['B', 'C']:
         print('Variation {name}:'.format(name=variation))
-        print('* lift = {value:.2%}'.format(value=lift[variation]))
+        print('* E[lift] = {value:.2%}'.format(value=lift[variation]))
+        print('* P({lower:.2%} < lift < {upper:.2%}) = 95%' \
+            .format(lower=interval[variation][0], upper=interval[variation][2]))
         print('* P({name} > {control}) = {value:.2%}' \
             .format(name=variation, control='A', value=dominance[variation]))

@@ -51,7 +51,7 @@ lifts = test.evaluate('expected lift', control='A')       # Expected lifts E[(X-
 intervals = test.evaluate('lift CI', control='A', ci=95)  # Lifts' 95%-credible intervals
 ```
 
-Available metrics for Bernoulli variations: `expected lift`, `lift CI`, `empirical lift`, `dominance`, `z-test dominance`.
+Available metrics for Bernoulli observation variations: `expected lift`, `lift CI`, `empirical lift`, `dominance`, `z-test dominance`.
 
 Print or visualize results
 ```python

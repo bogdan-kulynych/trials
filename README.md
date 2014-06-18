@@ -37,14 +37,20 @@ test.update({
     'C': (20, 15)  # 20 successes, 15 failures, total 35
 })
 
-# Evaluate results
-lift = test.evaluate('lift', control='A')
+# Evaluate some metrics, like
+## Dominance probabilities P(X > A)
 dominance = test.evaluate('dominance', control='A')
+## Expected lifts E[(X-A)/A]
+lift = test.evaluate('expected lift', control='A')
+## Lifts' 95%-credible intervals
+interval = test.evaluate('lift CI', control='A', ci=95)
 
-# Print metrics
+# Print results
 for variation in ['B', 'C']:
     print('Variation {name}:'.format(name=variation))
-    print('* lift = {value:.2%}'.format(value=lift[variation]))
+    print('* E[lift] = {value:.2%}'.format(value=lift[variation]))
+    print('* P({lower:.2%} < lift < {upper:.2%}) = 95%' \
+        .format(lower=interval[variation][0], upper=interval[variation][2]))
     print('* P({name} > {control}) = {value:.2%}' \
         .format(name=variation, control='A', value=dominance[variation]))
 ```
@@ -52,14 +58,18 @@ for variation in ['B', 'C']:
 Output:
 ```
 Variation B:
-* lift = 0.22%
-* P(B > A) = 50.39%
+* E[lift] = 0.22%
+* P(-13.47% < lift < 17.31%) = 95%
+* P(B > A) = 49.27%
 Variation C:
-* lift = -31.22%
-* P(C > A) = 0.35%
+* E[lift] = -31.22%
+* P(-51.33% < lift < -9.21%) = 95%
+* P(C > A) = 0.25%
 ```
 
-This means that variant **B** is better than **A** by about 0.2% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 31% with 1 - 0.35 = 99.65% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
+There's 50% chance that variation **B** is better than **A** (*dominance*). Most likely it is better by about 0.2% (*expected lift*), but there's 95% chance that real lift is anywhere betwen -13% to 17% (*lift CI*). You need more data to know if **B** is better or worse for sure.
+
+There's 100% - 0.25% = 99.75% chance that variation **C** is worse than **A**. Most likely it is worse by about 31%, and there's 95% chance that real lift falls betwen -51% to -9%. The data was sufficient to tell that this variation is almost certainly inferior to both **A** and **B**. However, if this 99.75% chance still doesn't convince you, you need more data.
 
 ### Theory
 Explanation of mathematics behind and usage guide are coming soon as a blog post.

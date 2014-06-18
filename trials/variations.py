@@ -21,7 +21,12 @@ class BernoulliVariation(Variation):
     params = ['alpha', 'beta']
     metrics = ['lift', 'empirical lift', 'dominance', 'z-test dominance']
 
-    def __init__(self, alpha=1, beta=1):
+    # By default uses informative Jeffreys' prior
+    # Call with alpha=1, beta=1 to use uninformative prior
+    def __init__(self, alpha=0.5, beta=0.5):
+        self.prior_alpha = alpha
+        self.prior_beta = beta
+
         self.alpha = alpha
         self.beta = beta
 

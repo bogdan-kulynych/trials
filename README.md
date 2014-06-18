@@ -52,14 +52,14 @@ for variation in ['B', 'C']:
 Output:
 ```
 Variation B:
-* lift = 0.43%
-* P(B > A) = 50.32%
+* lift = 0.22%
+* P(B > A) = 50.39%
 Variation C:
-* lift = -31.00%
-* P(C > A) = 0.22%
+* lift = -31.22%
+* P(C > A) = 0.35%
 ```
 
-This means that variant **B** is better than **A** by about 0.4% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 31% with 1 - 0.2 = 99.8% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
+This means that variant **B** is better than **A** by about 0.2% (*lift*) with 50% (*p*) chance, and variant **C** is worse than **A** by 31% with 1 - 0.35 = 99.65% chance, given that statistical assumptions on independence and identical Bernoulli distributions hold.
 
 ### Theory
 Explanation of mathematics behind and usage guide are coming soon as a blog post.

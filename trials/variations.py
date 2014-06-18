@@ -8,7 +8,8 @@ from .metrics import metrics
 class BernoulliVariation:
     """Variation that assumes binary bernoulli events"""
 
-    metrics = ['lift', 'lift CI', 'empirical lift', 'dominance', 'z-test dominance']
+    metrics = ['expected lift', 'lift CI', 'empirical lift', \
+        'dominance', 'z-test dominance']
 
     # By default uses informative Jeffreys' prior
     # Call with alpha=1, beta=1 to use uninformative prior

@@ -20,7 +20,7 @@ def _split(variations, control=None):
     return control, others
 
 
-def lift(variations, control=None):
+def expected_lift(variations, control=None):
     """Calculates expected lift E[(B-A)/A]"""
 
     values = OrderedDict()
@@ -37,7 +37,7 @@ def lift(variations, control=None):
 
 def lift_credible_interval(variations, control=None, ci=95, \
                            sample_size=SAMPLE_SIZE):
-    """Calculates symmetric credible interval for lift E[(B-A)/A] using MCMC"""
+    """Calculates credible interval for lift E[(B-A)/A] using MCMC"""
     values = OrderedDict()
     a, others = _split(variations, control)
 
@@ -131,7 +131,7 @@ def ztest_dominance(variations, control=None):
 
 
 metrics = {
-    'lift': lift,
+    'expected lift': expected_lift,
     'lift CI': lift_credible_interval,
     'empirical lift': empirical_lift,
     'dominance': dominance,

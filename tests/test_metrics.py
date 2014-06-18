@@ -7,12 +7,12 @@ from trials.metrics import *
 eps = 10e-3
 
 
-class TestLift:
+class TestExpectedLift:
 
     def setup(self):
         self.trials = Trials(['A', 'B', 'C'])
         self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
-        self.metric = self.trials.evaluate('lift', control='A')
+        self.metric = self.trials.evaluate('expected lift', control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)
@@ -36,7 +36,7 @@ class TestLiftCI:
         self.trials = Trials(['A', 'B', 'C'])
         self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
         self.metric = self.trials.evaluate('lift CI', control='A')
-        self.lift = self.trials.evaluate('lift', control='A')
+        self.lift = self.trials.evaluate('expected lift', control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.metric) == 2)

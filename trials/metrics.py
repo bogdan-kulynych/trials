@@ -62,7 +62,7 @@ def dominance(variations, control=None, sample_size=10000):
 
     Uses scipy's MCMC otherwise
 
-    TODO: The modified formula for informative prior has to proved correct
+    TODO: The modified formula for informative prior has to be proved correct
     """
 
     values = OrderedDict()

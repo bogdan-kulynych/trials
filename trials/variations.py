@@ -5,20 +5,9 @@ from collections import OrderedDict
 from .metrics import metrics
 
 
-class Variation(object):
-
-    @property
-    def rv(self):
-        """Returns posterior as a frozen random variable"""
-
-        return self.posterior(*[getattr(self, param) for param in self.params])
-
-
-class BernoulliVariation(Variation):
+class BernoulliVariation:
     """Variation that assumes binary bernoulli events"""
 
-    posterior = stats.beta
-    params = ['alpha', 'beta']
     metrics = ['lift', 'empirical lift', 'dominance', 'z-test dominance']
 
     # By default uses informative Jeffreys' prior
@@ -33,6 +22,10 @@ class BernoulliVariation(Variation):
     def update(self, successes, failures):
         self.alpha += successes
         self.beta += failures
+
+    @property
+    def posterior(self):
+        return stats.beta(self.alpha, self.beta)
 
 
 class NormalVariation(object):

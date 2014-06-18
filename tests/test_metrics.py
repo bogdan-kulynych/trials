@@ -26,8 +26,8 @@ class TestLift:
             self.metric['B'])
 
     def test_formula_matches_mcmc_result(self):
-        a_samples = self.trials.variations['A'].rv.rvs(size=10000)
-        b_samples = self.trials.variations['B'].rv.rvs(size=10000)
+        a_samples = self.trials.variations['A'].posterior.rvs(size=10000)
+        b_samples = self.trials.variations['B'].posterior.rvs(size=10000)
         mcmc_lift = np.mean((b_samples - a_samples) / a_samples)
         tools.assert_true(np.abs(mcmc_lift - self.metric['B']) < eps)
 

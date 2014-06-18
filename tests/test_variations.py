@@ -15,9 +15,9 @@ class TestBernoulli:
         tools.assert_true(self.var.alpha == 301)
         tools.assert_true(self.var.beta == 31)
 
-    def test_rv(self):
+    def test_posterior(self):
         self.var.update(150, 50)
 
-        m = self.var.rv.mean()
-        v = self.var.rv.var()
+        m = self.var.posterior.mean()
+        v = self.var.posterior.var()
         tools.assert_true(0.7 < m < 0.9)

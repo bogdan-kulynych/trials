@@ -38,8 +38,8 @@ test.update({
 })
 
 # Evaluate some metrics, like
-dominance = test.evaluate('dominance', control='A') # Dominance probabilities P(X > A)
-lift = test.evaluate('expected lift', control='A') # Expected lifts E[(X-A)/A]
+dominance = test.evaluate('dominance', control='A')     # Dominance probabilities P(X > A)
+lift = test.evaluate('expected lift', control='A')      # Expected lifts E[(X-A)/A]
 interval = test.evaluate('lift CI', control='A', ci=95) # Lifts' 95%-credible intervals
 
 # Print results
@@ -55,16 +55,16 @@ for variation in ['B', 'C']:
 Output:
 ```
 Variation B:
-* E[lift] = 0.22%
-* P(-13.47% < lift < 17.31%) = 95%
-* P(B > A) = 49.27%
+* E[lift] = 0.22%                    # expected lift
+* P(-13.47% < lift < 17.31%) = 95%   # lift CI
+* P(B > A) = 49.27%                  # dominance
 Variation C:
 * E[lift] = -31.22%
 * P(-51.33% < lift < -9.21%) = 95%
 * P(C > A) = 0.25%
 ```
 
-There's 50% chance that variation **B** is better than **A** (*dominance*). Most likely it is better by about 0.2% (*expected lift*), but there's 95% chance that real lift is anywhere betwen -13% to 17% (*lift CI*). You need more data to know if **B** is better or worse for sure.
+This means that there's 50% chance that variation **B** is better than **A** (*dominance*). Most likely it is better by about 0.2% (*expected lift*), but there's 95% chance that real lift is anywhere betwen -13% to 17% (*lift CI*). You need more data to know if **B** is better or worse for sure.
 
 There's 100% - 0.25% = 99.75% chance that variation **C** is worse than **A**. Most likely it is worse by about 31%, and there's 95% chance that real lift falls betwen -51% to -9%. The data was sufficient to tell that this variation is almost certainly inferior to both **A** and **B**. However, if this 99.75% chance still doesn't convince you, you need more data.
 

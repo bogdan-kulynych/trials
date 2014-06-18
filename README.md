@@ -4,7 +4,7 @@ Tiny Bayesian A/B testing library
 
 [![Build Status](https://travis-ci.org/bogdan-kulynych/trials.svg?branch=master)](https://travis-ci.org/bogdan-kulynych/trials)
 
-## Installation:
+## Installation
 
 ```
 pip install -r requirements.txt

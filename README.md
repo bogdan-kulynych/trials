@@ -38,12 +38,9 @@ test.update({
 })
 
 # Evaluate some metrics, like
-## Dominance probabilities P(X > A)
-dominance = test.evaluate('dominance', control='A')
-## Expected lifts E[(X-A)/A]
-lift = test.evaluate('expected lift', control='A')
-## Lifts' 95%-credible intervals
-interval = test.evaluate('lift CI', control='A', ci=95)
+dominance = test.evaluate('dominance', control='A') # Dominance probabilities P(X > A)
+lift = test.evaluate('expected lift', control='A') # Expected lifts E[(X-A)/A]
+interval = test.evaluate('lift CI', control='A', ci=95) # Lifts' 95%-credible intervals
 
 # Print results
 for variation in ['B', 'C']:

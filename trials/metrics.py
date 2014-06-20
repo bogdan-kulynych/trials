@@ -84,7 +84,7 @@ def lift_credible_interval(variations, control=None, level=95, \
     return values
 
 
-def dominance(variations, control=None, sample_size=10000):
+def dominance(variations, control=None, sample_size=SAMPLE_SIZE):
     """Calculates P(A > B)
 
     Uses a modified Evan Miller closed formula if prior parameters are integers

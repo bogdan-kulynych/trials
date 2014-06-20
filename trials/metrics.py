@@ -31,7 +31,7 @@ def expected_posterior(variations):
 
 
 def posterior_credible_interval(variations, level=95):
-    """Calculates expected posterior P(parameter | data)
+    """Calculates posterior P(parameter | data) credible interval
 
     Returns a 3-tuple (lower, median, upper)
     """

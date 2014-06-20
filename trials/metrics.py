@@ -21,7 +21,7 @@ def _split(variations, control=None):
 
 
 def expected_posterior(variations):
-    """Calculates expected posterior P(parameter | data)"""
+    """Calculates expected posterior E[parameter | data] for each variation"""
 
     values = OrderedDict()
     for label, variation in variations.items():
@@ -31,7 +31,8 @@ def expected_posterior(variations):
 
 
 def posterior_credible_interval(variations, level=95):
-    """Calculates posterior P(parameter | data) credible interval
+    """Calculates posterior P(parameter | data) credible interval for each
+    variation
 
     Returns a 3-tuple (lower, median, upper)
     """

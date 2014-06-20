@@ -46,9 +46,9 @@ test.update({
 
 Evaluate some metrics
 ```python
-dominances = test.evaluate('dominance', control='A')      # Dominance probabilities P(X > A)
-lifts = test.evaluate('expected lift', control='A')       # Expected lifts E[(X-A)/A]
-intervals = test.evaluate('lift CI', control='A', ci=95)  # Lifts' 95%-credible intervals
+dominances = test.evaluate('dominance', control='A')         # Dominance probabilities P(X > A)
+lifts = test.evaluate('expected lift', control='A')          # Expected lifts E[(X-A)/A]
+intervals = test.evaluate('lift CI', control='A', level=95)  # Lifts' 95%-credible intervals
 ```
 
 Available metrics for Bernoulli observation variations: `expected posterior`, `posterior CI`, `expected lift`, `lift CI`, `empirical lift`, `dominance`, `z-test dominance`.

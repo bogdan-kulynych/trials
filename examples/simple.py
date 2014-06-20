@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     dominance = test.evaluate('dominance', control='A')
     lift = test.evaluate('expected lift', control='A')
-    interval = test.evaluate('lift CI', control='A', ci=95)
+    interval = test.evaluate('lift CI', control='A', level=95)
 
     for variation in ['B', 'C']:
         print('Variation {name}:'.format(name=variation))

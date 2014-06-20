@@ -19,6 +19,7 @@ def _split(variations, control=None):
 
     return control, others
 
+
 def expected_posterior(variations):
     """Calculates expected posterior P(parameter | data)"""
 

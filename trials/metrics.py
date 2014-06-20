@@ -19,6 +19,32 @@ def _split(variations, control=None):
 
     return control, others
 
+def expected_posterior(variations):
+    """Calculates expected posterior P(parameter | data)"""
+
+    values = OrderedDict()
+    for label, variation in variations.items():
+        values[label] = variation.posterior.mean()
+
+    return values
+
+
+def posterior_credible_interval(variations, level=95):
+    """Calculates expected posterior P(parameter | data)
+
+    Returns a 3-tuple (lower, median, upper)
+    """
+
+    values = OrderedDict()
+    for label, variation in variations.items():
+        left_percentile = 0.5*(100-level)/100
+        left = variation.posterior.ppf(left_percentile)
+        median = variation.posterior.ppf(0.5)
+        right = variation.posterior.ppf((level+left_percentile)/100)
+        values[label] = min(left, right), median, max(left, right)
+
+    return values
+
 
 def expected_lift(variations, control=None):
     """Calculates expected lift E[(B-A)/A]"""
@@ -35,9 +61,12 @@ def expected_lift(variations, control=None):
     return values
 
 
-def lift_credible_interval(variations, control=None, ci=95, \
+def lift_credible_interval(variations, control=None, level=95, \
                            sample_size=SAMPLE_SIZE):
-    """Calculates credible interval for lift E[(B-A)/A] using MCMC"""
+    """Calculates credible interval for lift E[(B-A)/A] using MCMC
+
+    Returns a 3-tuple (lower, median, upper)
+    """
     values = OrderedDict()
     a, others = _split(variations, control)
 
@@ -45,8 +74,8 @@ def lift_credible_interval(variations, control=None, ci=95, \
         a_samples = a.posterior.rvs(size=sample_size)
         b_samples = b.posterior.rvs(size=sample_size)
         lift_samples = (b_samples-a_samples)/a_samples
-        left_percentile = 0.5*(100 - ci)
-        right = np.percentile(lift_samples, ci + left_percentile)
+        left_percentile = 0.5*(100-level)
+        right = np.percentile(lift_samples, level+left_percentile)
         median = np.percentile(lift_samples, 50)
         left = np.percentile(lift_samples, left_percentile)
         values[label] = min(left, right), median, max(left, right)
@@ -131,6 +160,8 @@ def ztest_dominance(variations, control=None):
 
 
 metrics = {
+    'expected posterior': expected_posterior,
+    'posterior CI': posterior_credible_interval,
     'expected lift': expected_lift,
     'lift CI': lift_credible_interval,
     'empirical lift': empirical_lift,

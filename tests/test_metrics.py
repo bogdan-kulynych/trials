@@ -7,6 +7,43 @@ from trials.metrics import *
 eps = 10e-3
 
 
+class TestExpectedPosterior:
+
+    def setup(self):
+        self.trials = Trials(['A', 'B', 'C'])
+        self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
+        self.metric = self.trials.evaluate('expected posterior')
+
+    def test_evaluate(self):
+        tools.assert_true(len(self.metric) == 3)
+
+    def test_sanity(self):
+        tools.assert_true(self.metric['A'] > 0.99)
+        tools.assert_true(np.abs(self.metric['B'] - 0.66) < eps)
+        tools.assert_true(self.metric['C'] > 0.9)
+
+
+class TestPosteriorCI:
+
+    def setup(self):
+        self.trials = Trials(['A', 'B', 'C'])
+        self.trials.update({'A': (1000, 1), 'B': (1000, 500), 'C': (100, 10)})
+        self.metric = self.trials.evaluate('posterior CI')
+        self.mean = self.trials.evaluate('expected posterior')
+
+    def test_evaluate(self):
+        tools.assert_true(len(self.metric) == 3)
+
+    def test_sanity(self):
+        print(self.metric['A'])
+        tools.assert_true(self.metric['A'][0] < self.metric['A'][1] < self.metric['A'][2])
+        tools.assert_true(self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
+        tools.assert_true(self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
+        tools.assert_true(self.metric['A'][0] < self.mean['A'] < self.metric['A'][2])
+        tools.assert_true(self.metric['B'][0] < self.mean['B'] < self.metric['B'][2])
+        tools.assert_true(self.metric['C'][0] < self.mean['C'] < self.metric['C'][2])
+
+
 class TestExpectedLift:
 
     def setup(self):
@@ -43,10 +80,10 @@ class TestLiftCI:
         tools.assert_true(len(self.metric['B']) == 3)
 
     def test_sanity(self):
-        tools.assert_true(self.metric['B'][0] < self.lift['B'] \
-            < self.metric['B'][2])
-        tools.assert_true(self.metric['C'][0] < self.lift['C'] \
-            < self.metric['C'][2])
+        tools.assert_true(self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
+        tools.assert_true(self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
+        tools.assert_true(self.metric['B'][0] < self.lift['B'] < self.metric['B'][2])
+        tools.assert_true(self.metric['C'][0] < self.lift['C'] < self.metric['C'][2])
 
 
 class TestDominance:

@@ -8,11 +8,12 @@ from .metrics import metrics
 class BernoulliVariation(object):
     """Variation that assumes binary Bernoulli events"""
 
-    metrics = ['expected lift', 'lift CI', 'empirical lift', \
+    metrics = ['expected posterior', 'posterior CI',
+        'expected lift', 'lift CI', 'empirical lift',
         'dominance', 'z-test dominance']
 
-    # By default uses informative Jeffreys' prior
-    # Call with alpha=1, beta=1 to use uninformative prior
+    # By default uses Jeffreys' prior
+    # Call with alpha=1, beta=1 to use flat prior
     def __init__(self, alpha=0.5, beta=0.5):
         self.prior_alpha = alpha
         self.prior_beta = beta

@@ -1,3 +1,5 @@
+"""Simple A/B test example."""
+
 import sys
 sys.path.append('..')
 
@@ -20,7 +22,9 @@ if __name__ == '__main__':
     for variation in ['B', 'C']:
         print('Variation {name}:'.format(name=variation))
         print('* E[lift] = {value:.2%}'.format(value=lift[variation]))
-        print('* P({lower:.2%} < lift < {upper:.2%}) = 95%' \
-            .format(lower=interval[variation][0], upper=interval[variation][2]))
-        print('* P({name} > {control}) = {value:.2%}' \
-            .format(name=variation, control='A', value=dominance[variation]))
+        print('* P({lower:.2%} < lift < {upper:.2%}) = 95%'
+              .format(lower=interval[variation][0],
+                      upper=interval[variation][2]))
+        print('* P({name} > {control}) = {value:.2%}'
+              .format(name=variation, control='A',
+                      value=dominance[variation]))

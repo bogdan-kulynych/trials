@@ -7,9 +7,9 @@ class BernoulliVariation(object):
 
     """Variation that assumes binary Bernoulli events."""
 
-    metrics = ['expected posterior', 'posterior CI',
-               'expected lift', 'lift CI', 'empirical lift',
-               'dominance', 'z-test dominance']
+    stats = ['expected posterior', 'posterior CI',
+             'expected lift', 'lift CI', 'empirical lift',
+             'dominance', 'z-test dominance']
 
     # By default uses Jeffreys' prior
     # Call with alpha=1, beta=1 to use flat prior

@@ -1,4 +1,4 @@
-"""Metrics functions."""
+"""Useful statistics."""
 
 from collections import OrderedDict
 
@@ -158,7 +158,7 @@ def ztest_dominance(variations, control=None):
     return values
 
 
-metrics = {
+statistic_funcs = {
     'expected posterior': expected_posterior,
     'posterior CI': posterior_credible_interval,
     'expected lift': expected_lift,

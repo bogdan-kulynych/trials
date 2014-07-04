@@ -12,8 +12,8 @@ class TestTrials:
         tools.assert_raises(Trials.UnsupportedVariationType,
                             Trials, ['A', 'B'], 'whatever')
 
-    def test_raises_unknown_metric(self):
-        tools.assert_raises(Trials.UnsupportedMetric,
+    def test_raises_unknown_statistic(self):
+        tools.assert_raises(Trials.UnsupportedStatistic,
                             self.trials.evaluate, 'whatever')
 
     def test_variants(self):

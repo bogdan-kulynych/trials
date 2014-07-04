@@ -3,7 +3,7 @@
 from collections import OrderedDict
 
 from .variations import vtypes as default_vtypes
-from .metrics import metrics as default_metrics
+from .stats import statistic_funcs
 
 
 class Trials(object):
@@ -13,7 +13,7 @@ class Trials(object):
     class UnsupportedVariationType(Exception):
         pass
 
-    class UnsupportedMetric(Exception):
+    class UnsupportedStatistic(Exception):
         pass
 
     def __init__(self, variation_labels, vtype='bernoulli', *args, **kwargs):
@@ -32,14 +32,14 @@ class Trials(object):
         for label, observations in feed.items():
             self.variations[label].update(*observations)
 
-    def evaluate(self, metric, *args, **kwargs):
-        """Evaluate a metric."""
+    def evaluate(self, statistic, *args, **kwargs):
+        """Evaluate a statistic."""
         result = None
-        if isinstance(metric, str):
-            if metric not in self.vtype.metrics:
-                raise Trials.UnsupportedMetric(metric)
-            func = default_metrics[metric]
+        if isinstance(statistic, str):
+            if statistic not in self.vtype.stats:
+                raise Trials.UnsupportedStatistic(statistic)
+            func = statistic_funcs[statistic]
             result = func(self.variations, *args, **kwargs)
         else:
-            result = metric(self.variations, *args, **kwargs)
+            result = statistic(self.variations, *args, **kwargs)
         return result

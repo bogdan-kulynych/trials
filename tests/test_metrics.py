@@ -36,12 +36,18 @@ class TestPosteriorCI:
 
     def test_sanity(self):
         print(self.metric['A'])
-        tools.assert_true(self.metric['A'][0] < self.metric['A'][1] < self.metric['A'][2])
-        tools.assert_true(self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
-        tools.assert_true(self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
-        tools.assert_true(self.metric['A'][0] < self.mean['A'] < self.metric['A'][2])
-        tools.assert_true(self.metric['B'][0] < self.mean['B'] < self.metric['B'][2])
-        tools.assert_true(self.metric['C'][0] < self.mean['C'] < self.metric['C'][2])
+        tools.assert_true(
+            self.metric['A'][0] < self.metric['A'][1] < self.metric['A'][2])
+        tools.assert_true(
+            self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
+        tools.assert_true(
+            self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
+        tools.assert_true(
+            self.metric['A'][0] < self.mean['A'] < self.metric['A'][2])
+        tools.assert_true(
+            self.metric['B'][0] < self.mean['B'] < self.metric['B'][2])
+        tools.assert_true(
+            self.metric['C'][0] < self.mean['C'] < self.metric['C'][2])
 
 
 class TestExpectedLift:
@@ -55,10 +61,10 @@ class TestExpectedLift:
         tools.assert_true(len(self.metric) == 2)
 
     def test_sanity(self):
-        tools.assert_true(self.metric['C'] < 0 and \
-            self.metric['B'] < 0)
-        tools.assert_true(self.metric['C'] > \
-            self.metric['B'])
+        tools.assert_true(self.metric['C'] < 0 and
+                          self.metric['B'] < 0)
+        tools.assert_true(self.metric['C'] >
+                          self.metric['B'])
 
     def test_formula_matches_mcmc_result(self):
         a_samples = self.trials.variations['A'].posterior.rvs(size=10000)
@@ -80,10 +86,14 @@ class TestLiftCI:
         tools.assert_true(len(self.metric['B']) == 3)
 
     def test_sanity(self):
-        tools.assert_true(self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
-        tools.assert_true(self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
-        tools.assert_true(self.metric['B'][0] < self.lift['B'] < self.metric['B'][2])
-        tools.assert_true(self.metric['C'][0] < self.lift['C'] < self.metric['C'][2])
+        tools.assert_true(
+            self.metric['B'][0] < self.metric['B'][1] < self.metric['B'][2])
+        tools.assert_true(
+            self.metric['C'][0] < self.metric['C'][1] < self.metric['C'][2])
+        tools.assert_true(
+            self.metric['B'][0] < self.lift['B'] < self.metric['B'][2])
+        tools.assert_true(
+            self.metric['C'][0] < self.lift['C'] < self.metric['C'][2])
 
 
 class TestDominance:
@@ -93,28 +103,30 @@ class TestDominance:
 
         self.jeffreys_trials = Trials(['A', 'B', 'C'])
         self.jeffreys_trials.update(observations)
-        self.jeffreys_metric = self.jeffreys_trials.evaluate('dominance', control='A')
+        self.jeffreys_metric = self.jeffreys_trials.evaluate('dominance',
+                                                             control='A')
 
         self.uninform_trials = Trials(['A', 'B', 'C'], alpha=1, beta=1)
         self.uninform_trials.update(observations)
-        self.uninform_metric = self.uninform_trials.evaluate('dominance', control='A')
+        self.uninform_metric = self.uninform_trials.evaluate('dominance',
+                                                             control='A')
 
     def test_evaluate(self):
         tools.assert_true(len(self.jeffreys_metric) == 2)
         tools.assert_true(len(self.uninform_metric) == 2)
 
     def test_sanity(self):
-        tools.assert_true(self.jeffreys_metric['C'] >= \
+        tools.assert_true(self.jeffreys_metric['C'] >=
             self.jeffreys_metric['B'])
-        tools.assert_true(self.uninform_metric['C'] >= \
+        tools.assert_true(self.uninform_metric['C'] >=
             self.uninform_metric['B'])
 
     def test_uninformed_and_informed_results_match(self):
         print(self.jeffreys_metric['C'], self.uninform_metric['C'])
-        tools.assert_true(np.abs(self.jeffreys_metric['B'] - \
-            self.uninform_metric['B']) <= eps)
-        tools.assert_true(np.abs(self.jeffreys_metric['C'] - \
-            self.uninform_metric['C']) <= eps)
+        tools.assert_true(np.abs(self.jeffreys_metric['B'] -
+                                 self.uninform_metric['B']) <= eps)
+        tools.assert_true(np.abs(self.jeffreys_metric['C'] -
+                                 self.uninform_metric['C']) <= eps)
 
 
 class TestZTestDominance:
@@ -128,8 +140,7 @@ class TestZTestDominance:
         tools.assert_true(len(self.metric) == 2)
 
     def test_sanity(self):
-        tools.assert_true(self.metric['C'] > \
-            self.metric['B'])
+        tools.assert_true(self.metric['C'] > self.metric['B'])
 
 
 class TestEmpiricalLift:
@@ -143,7 +154,5 @@ class TestEmpiricalLift:
         tools.assert_true(len(self.metric) == 2)
 
     def test_sanity(self):
-        tools.assert_true(self.metric['C'] < 0 and \
-            self.metric['B'] < 0)
-        tools.assert_true(self.metric['C'] > \
-            self.metric['B'])
+        tools.assert_true(self.metric['C'] < 0 and self.metric['B'] < 0)
+        tools.assert_true(self.metric['C'] > self.metric['B'])

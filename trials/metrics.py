@@ -1,3 +1,5 @@
+"""Metrics functions."""
+
 from collections import OrderedDict
 
 import numpy as np
@@ -13,16 +15,15 @@ def _split(variations, control=None):
     if control is None:
         control = list(variations.keys())[0]
 
-    others = OrderedDict((label, variation) for label, variation \
-        in variations.items() if label != control)
+    others = OrderedDict((label, variation) for label, variation
+                         in variations.items() if label != control)
     control = variations[control]
 
     return control, others
 
 
 def expected_posterior(variations):
-    """Calculates expected posterior E[parameter | data] for each variation"""
-
+    """Calculate expected posterior E[parameter | data] for each variation."""
     values = OrderedDict()
     for label, variation in variations.items():
         values[label] = variation.posterior.mean()
@@ -31,8 +32,8 @@ def expected_posterior(variations):
 
 
 def posterior_credible_interval(variations, level=95):
-    """Calculates posterior P(parameter | data) credible interval for each
-    variation
+    """Calculate posterior P(parameter | data) credible interval for each
+    variation.
 
     Returns a 3-tuple (lower, median, upper)
     """
@@ -49,8 +50,7 @@ def posterior_credible_interval(variations, level=95):
 
 
 def expected_lift(variations, control=None):
-    """Calculates expected lift E[(B-A)/A]"""
-
+    """Calculate expected lift E[(B-A)/A]."""
     values = OrderedDict()
     control, others = _split(variations, control)
     a = control.posterior
@@ -63,9 +63,9 @@ def expected_lift(variations, control=None):
     return values
 
 
-def lift_credible_interval(variations, control=None, level=95, \
+def lift_credible_interval(variations, control=None, level=95,
                            sample_size=SAMPLE_SIZE):
-    """Calculates credible interval for lift E[(B-A)/A] using MCMC
+    """Calculate credible interval for lift E[(B-A)/A] using MCMC.
 
     Returns a 3-tuple (lower, median, upper)
     """
@@ -86,7 +86,7 @@ def lift_credible_interval(variations, control=None, level=95, \
 
 
 def dominance(variations, control=None, sample_size=SAMPLE_SIZE):
-    """Calculates P(A > B)
+    """Calculate P(A > B).
 
     Uses a modified Evan Miller closed formula if prior parameters are integers
     http://www.evanmiller.org/bayesian-ab-testing.html
@@ -95,7 +95,6 @@ def dominance(variations, control=None, sample_size=SAMPLE_SIZE):
 
     TODO: The modified formula for informative prior has to be proved correct
     """
-
     values = OrderedDict()
     a, others = _split(variations, control)
 
@@ -109,13 +108,13 @@ def dominance(variations, control=None, sample_size=SAMPLE_SIZE):
 
         # If prior parameters are integers, use modified Evan Miller formula:
         if is_integer(a.prior_alpha) and is_integer(a.prior_beta) \
-            and is_integer(b.prior_alpha) and is_integer(b.prior_beta):
+           and is_integer(b.prior_alpha) and is_integer(b.prior_beta):
 
             total = 0
             for i in range(b.alpha-b.prior_alpha):
-                total += np.exp(spc.betaln(a.alpha+i, b.beta + a.beta) \
-                    - np.log(b.beta+i) - spc.betaln(b.prior_alpha+i, b.beta) -\
-                                            spc.betaln(a.alpha, a.beta))
+                total += np.exp(spc.betaln(a.alpha+i, b.beta + a.beta) -
+                                np.log(b.beta+i) - spc.betaln(b.prior_alpha+i,
+                                b.beta) - spc.betaln(a.alpha, a.beta))
             values[label] = total
 
         # Use MCMC otherwise
@@ -128,8 +127,7 @@ def dominance(variations, control=None, sample_size=SAMPLE_SIZE):
 
 
 def empirical_lift(variations, control=None):
-    """Calculates empirical lift E[(B-A)/A]"""
-
+    """Calculate empirical lift E[(B-A)/A]."""
     values = OrderedDict()
     a, others = _split(variations, control)
     for label, b in others.items():
@@ -144,8 +142,7 @@ def empirical_lift(variations, control=None):
 
 
 def ztest_dominance(variations, control=None):
-    """Calculates z-test for dominance"""
-
+    """Calculate z-test for dominance."""
     values = OrderedDict()
     a, others = _split(variations, control)
     for label, b in others.items():

@@ -1,5 +1,4 @@
 from nose import tools
-import numpy as np
 
 from trials.variations import *
 
@@ -19,5 +18,5 @@ class TestBernoulli:
         self.var.update(150, 50)
 
         m = self.var.posterior.mean()
-        v = self.var.posterior.var()
+        self.var.posterior.var()
         tools.assert_true(0.7 < m < 0.9)

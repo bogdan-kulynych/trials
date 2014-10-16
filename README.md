@@ -7,7 +7,7 @@ Tiny Bayesian A/B testing library
 ## Installation
 
 ```
-pip install -r requirements.txt
+pip install git+git://github.com/bogdan-kulynych/trials.git@mast
 ```
 
 pip might not install all the system packages needed for scipy. To install them on Debian:
@@ -16,10 +16,10 @@ pip might not install all the system packages needed for scipy. To install them 
 sudo apt-get install libatlas-dev libatlas-base-dev liblapack-dev gfortran
 ```
 
-Running tests:
+Run the tests:
 
 ```
-nosetests
+nosetests trials/tests
 ```
 
 ## Usage

@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: trials
+Version: 0.1
+Summary: Tiny Bayesian A/B testing library
+Home-page: https://github.com/trials
+Author: Bogdan Kulynych
+Author-email: hello@hidden-markov.com
+License: MIT
+Description: UNKNOWN
+Keywords: A/B testing,data analysis,statistics
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4

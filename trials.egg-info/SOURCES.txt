@@ -1,0 +1,15 @@
+setup.cfg
+setup.py
+trials/__init__.py
+trials/stats.py
+trials/trials.py
+trials/variations.py
+trials.egg-info/PKG-INFO
+trials.egg-info/SOURCES.txt
+trials.egg-info/dependency_links.txt
+trials.egg-info/requires.txt
+trials.egg-info/top_level.txt
+trials/tests/__init__.py
+trials/tests/test_stats.py
+trials/tests/test_trials.py
+trials/tests/test_variations.py

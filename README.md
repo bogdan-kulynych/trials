@@ -6,14 +6,17 @@ Tiny Bayesian A/B testing library
 
 ## Installation
 
-```
-pip install git+git://github.com/bogdan-kulynych/trials.git@master
-```
 
-pip might not install all the system packages needed for scipy. To install them on Debian:
+Install system dependencies (Debian):
 
 ```
 sudo apt-get install libatlas-dev libatlas-base-dev liblapack-dev gfortran
+```
+
+Install the Python package:
+
+```
+pip install git+git://github.com/bogdan-kulynych/trials.git@master
 ```
 
 Run the tests:

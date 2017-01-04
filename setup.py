@@ -1,7 +1,7 @@
 from setuptools import setup
 from pip.req import parse_requirements
 
-parsed_reqs = parse_requirements('requirements.txt')
+parsed_reqs = parse_requirements('requirements.txt', session=False)
 requirements = [str(x.req) for x in parsed_reqs]
 
 
@@ -9,8 +9,8 @@ setup (name='trials',
        version='0.1',
        description='Tiny Bayesian A/B testing library',
        author='Bogdan Kulynych',
-       author_email='hello@hidden-markov.com',
-       url='https://github.com/trials',
+       author_email='hello@bogdankulynych.me',
+       url='https://github.com/bogdan-kulynych/trials',
        packages=['trials', 'trials.tests'],
        license='MIT',
        keywords='A/B testing, data analysis, statistics',
